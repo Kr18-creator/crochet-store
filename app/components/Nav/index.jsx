@@ -1,10 +1,11 @@
 import React from "react";
+import Link from 'next/link'
 
 const Nav = () => {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">WOVEN.in</a>
+          <Link href="/" className="btn btn-ghost text-xl">WOVEN.in</Link>
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
@@ -34,8 +35,11 @@ const Nav = () => {
             <div className="card-body">
               <span className="font-bold text-lg">8 Items</span>
               <span className="text-info">Subtotal: $999</span>
+          
               <div className="card-actions">
+              <Link href="/cart">
                 <button className="btn btn-primary btn-block">View cart</button>
+                </Link>
               </div>
             </div>
           </div>
