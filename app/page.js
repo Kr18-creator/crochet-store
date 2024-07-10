@@ -1,23 +1,17 @@
-import Image from "next/image";
+"use client";
 import Card from "./components/Card";
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import useSWR from "swr";
+import axios from "axios";
+
+const fetcher = url => axios.get(url).then(res => res.data);
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
+  const { data, error } = useSWR("http://localhost:8080/products", fetcher);
 
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const response = await axios.get('http://localhost:8080/products/all');
-        setProducts(response.data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    }
+  if (error) return <div>Error loading products</div>;
+  if (!data) return <div>Loading...</div>;
 
-    fetchProducts();
-  }, []);
+  const products = data.products;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -40,18 +34,18 @@ export default function Home() {
       <div className="new-arrivals">
         <h1 className="text-3xl font-bold text-center m-4">New Arrivals</h1>
         <div className="flex">
-          {products.map(product => (
-            <Card
-              key={product._id}
-              productId={product._id}
-              image={product.image}
-              description={product.description}
-              price={product.price}
-            />
+          {products.map((product) => (
+           <Card
+           key={product._id}
+           productId={product._id}
+           name={product.name}
+           description={product.description}
+           price={product.price}
+           image={product.image}
+         />
           ))}
         </div>
       </div>
     </main>
   );
 }
-

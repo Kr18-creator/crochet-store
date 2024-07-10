@@ -1,20 +1,19 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import axios from "axios";
+import useSWR from "swr";
+
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 function Cart() {
-  const [products, setProducts] = useState([]);
+  const { data, error } = useSWR("http://localhost:8080/cart", fetcher);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/cart/all")
-      .then((response) => setProducts(response.data.cart.products))
-      .catch((error) => console.error(error));
-  }, []);
+  if (error) return <div>Error loading data.</div>;
+  if (!data) return <div>Loading...</div>;
 
   return (
     <div>
-      {products?.map((product, index) => (
+      {data.cart.products.map((product, index) => (
         <ul key={index}>
           <li>{product.name}</li>
           <li>{product.price}</li>
