@@ -1,8 +1,24 @@
 import Image from "next/image";
 import Card from "./components/Card";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-// Rest of the code
 export default function Home() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await axios.get('http://localhost:8080/products/all');
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    }
+
+    fetchProducts();
+  }, []);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="hero min-h-[600px]">
@@ -24,9 +40,18 @@ export default function Home() {
       <div className="new-arrivals">
         <h1 className="text-3xl font-bold text-center m-4">New Arrivals</h1>
         <div className="flex">
-         <Card  productId="668cabb2cac52023082a6ff1" image="" description="" price=""/>
+          {products.map(product => (
+            <Card
+              key={product._id}
+              productId={product._id}
+              image={product.image}
+              description={product.description}
+              price={product.price}
+            />
+          ))}
         </div>
       </div>
     </main>
   );
 }
+

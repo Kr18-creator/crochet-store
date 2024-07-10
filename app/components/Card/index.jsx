@@ -37,7 +37,7 @@ const Card = ({ productId, image, description, price }) => {
         </figure>
       </Link>
       <div className="card-body">
-        <h2 className="card-title">Product</h2>
+        <h2 className="card-title">{description}</h2>
         <p>{description}</p>
         <p className="text-lg font-bold">${price}</p>
         <div className="card-actions justify-end">
