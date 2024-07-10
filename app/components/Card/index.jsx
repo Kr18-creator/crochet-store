@@ -12,54 +12,34 @@ import axios from 'axios';
  * @param {string} props.productId - The ID of the product.
  * @returns {JSX.Element} The rendered Card component.
  */
-const Card = ({ productId }) => {
+
+const Card = ({ productId, image, description, price }) => {
   /**
    * Adds the product to the cart.
    *
    * @param {string} productId - The ID of the product to add to the cart.
    */
-
-
   const addToCart = (productId) => {
-    axios.post('/cart', { productId })
+    axios.post('http://localhost:8080/cart/add', { productId })
       .then(response => {
-        console.log(response.data.message); // Optional: Display a success message
-        // TODO: Implement any additional logic after adding the product to the cart
+        console.log(response.data); 
       })
       .catch(error => {
         console.error('Error:', error);
-        // TODO: Implement error handling if needed
       });
   };
-  // const addToCart = (productId) => {
-  //   fetch('/cart', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({ productId })
-  //   })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log(data.message); // Optional: Display a success message
-  //       // TODO: Implement any additional logic after adding the product to the cart
-  //     })
-  //     .catch(error => {
-  //       console.error('Error:', error);
-  //       // TODO: Implement error handling if needed
-  //     });
-  // };
 
   return (
     <div className="card w-72 bg-base-100 shadow-xl m-2">
       <Link href={`/product/${productId}`}>
         <figure>
-          <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
+          <img src={image} alt="Product Image" />
         </figure>
       </Link>
       <div className="card-body">
-        <h2 className="card-title">Shoes!</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
+        <h2 className="card-title">Product</h2>
+        <p>{description}</p>
+        <p className="text-lg font-bold">${price}</p>
         <div className="card-actions justify-end">
           <Link href={'/cart'}>
             <button className="btn btn-primary" onClick={() => addToCart(productId)}>Buy Now</button>

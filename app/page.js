@@ -1,11 +1,5 @@
 import Image from "next/image";
 import Card from "./components/Card";
-import { v4 as uuidv4 } from 'uuid';
-// Generate product ids
-const productId1 = uuidv4();
-const productId2 = uuidv4();
-const productId3 = uuidv4();
-const productId4 = uuidv4();
 
 // Rest of the code
 export default function Home() {
@@ -30,10 +24,7 @@ export default function Home() {
       <div className="new-arrivals">
         <h1 className="text-3xl font-bold text-center m-4">New Arrivals</h1>
         <div className="flex">
-          <Card productId={productId1} />
-          <Card productId={productId2} />
-          <Card productId={productId3} />
-          <Card productId={productId4} />
+         <Card  productId="668cabb2cac52023082a6ff1" image="" description="" price=""/>
         </div>
       </div>
     </main>
