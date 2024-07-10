@@ -13,7 +13,7 @@ import axios from 'axios';
  * @returns {JSX.Element} The rendered Card component.
  */
 
-const Card = ({ productId, image, description, price }) => {
+const Card = ({ productId, image, description, price , name}) => {
   /**
    * Adds the product to the cart.
    *
@@ -37,7 +37,7 @@ const Card = ({ productId, image, description, price }) => {
         </figure>
       </Link>
       <div className="card-body">
-        <h2 className="card-title">{description}</h2>
+        <h2 className="card-title">{name}</h2>
         <p>{description}</p>
         <p className="text-lg font-bold">${price}</p>
         <div className="card-actions justify-end">
